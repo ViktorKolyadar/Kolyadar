@@ -102,8 +102,10 @@
           border-radius: 16px;
       }
       .not-found {
+          display: inline-block;
+          padding: 6px 32px;
           background: #ffffff;
-          color: #000000;
+          border-radius: 16px;
       }
       .person-data-value{
           flex: 1 0 350px;
@@ -335,7 +337,7 @@
         </svg>
 
       </div>
-      <div class="invalid-image status-container-image">
+      <div class="valid-image status-container-image">
         <svg width="350" height="172" viewBox="0 0 350 172" fill="none" xmlns="http://www.w3.org/2000/svg">
           <mask id="mask3" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="350" height="172">
             <path d="M0 25.6C0 16.6392 0 12.1587 1.7439 8.73615C3.27787 5.72556 5.72556 3.27787 8.73615 1.7439C12.1587 0 16.6392 0 25.6 0H324.4C333.361 0 337.841 0 341.264 1.7439C344.274 3.27787 346.722 5.72556 348.256 8.73615C350 12.1587 350 16.6392 350 25.6V145.654C350 154.615 350 159.095 348.256 162.518C346.722 165.528 344.274 167.976 341.264 169.51C337.841 171.254 333.361 171.254 324.4 171.254H25.6C16.6392 171.254 12.1587 171.254 8.73615 169.51C5.72556 167.976 3.27787 165.528 1.7439 162.518C0 159.095 0 154.615 0 145.654V25.6Z" fill="#EE3F58"/>
@@ -392,7 +394,7 @@
         var cls = '';
         var self = this;
         if (cert.invalid) {
-          cls = 'invalid';
+          cls = 'complete';
           self.certStatusName = 'Действителен';
           self.encertStatusName = 'Valid';
         } else {
@@ -404,7 +406,7 @@
       },
       filterAttrs: function(cert, targetNames) {
         return cert.attrs.filter(function(attr)  {
-          return targetNames.indexOf(attr.type) !== -1 && attr.value;
+          return 'oooops'//targetNames.indexOf(attr.type) !== -1 && attr.value;
         });
       },
       showAttrs: function(cert) {
@@ -413,8 +415,6 @@
         var self = this;
 
         if (cert.invalid) {
-          attrsContainer.classList.add('hide');
-        } else {
           if (self.lang === 'ru') {
             attrsContainer.innerHTML += `<div class="mb-4 person-data-wrap attr-wrap"><div class="attrValue title-h6 bold text-center">${self.getValue(cert, "fio")}</div></div>`;
             attrsContainer.innerHTML += `<div class="mb-4 person-data-wrap attr-wrap"><div class="small-text mb-4 mr-4 attr-title">Паспорт: </div><div class="attrValue small-text gray">${self.getValue(cert, "doc")}</div></div>`;
@@ -523,10 +523,6 @@
         langImage.classList.toggle(this.lang);
 
         if (cert.invalid) {
-          var notFound = document.querySelector('.not-found');
-          notFound.classList.remove('hide');
-          notFound.innerHTML = this.getValue('', (this.lang === 'en' ? 'en' : '') + 'certStatusName');
-        } else {
           var certName = document.querySelector('.cert-name');
           certName.classList.remove('hide');
           certName.innerHTML = this.getValue('', (this.lang === 'en' ? 'en' : '') + 'certStatusName')
